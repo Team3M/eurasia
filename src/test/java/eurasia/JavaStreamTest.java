@@ -25,7 +25,7 @@ import org.junit.Test;
 import com.threem.eurasia.sample.Employee;
 import com.threem.eurasia.sample.Person;
 
-public class streamTest {
+public class JavaStreamTest {
 
 	@Test
 	public void sampleStreamBefore() {

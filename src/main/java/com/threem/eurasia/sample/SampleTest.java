@@ -1,6 +1,5 @@
 package com.threem.eurasia.sample;
 
-import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -65,7 +64,6 @@ public class SampleTest {
 		System.out.println(avg);
 		
 	}
-	
 	
 	
 }
