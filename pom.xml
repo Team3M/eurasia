@@ -194,6 +194,13 @@
 	  <artifactId>cubrid-jdbc</artifactId>
 	  <version>9.2.13.0003</version>
 	</dependency>
+	
+	<!-- lombok -->
+	<dependency>
+	  <groupId>org.projectlombok</groupId>
+	  <artifactId>lombok</artifactId>
+	  <version>1.16.2</version>
+	</dependency>
     
   </dependencies>
  

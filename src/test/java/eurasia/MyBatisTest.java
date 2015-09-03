@@ -1,6 +1,9 @@
 package eurasia;
 
 import java.io.InputStream;
+import java.util.Properties;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +13,7 @@ import org.junit.Test;
 
 import com.threem.eurasia.sample.EurasiaMapper;
 
+@Slf4j
 public class MyBatisTest {
 
 	//MyBatis XML 설정 값 자바로 직접 연결해서 사용해 보기 !! 
@@ -25,7 +29,7 @@ public class MyBatisTest {
 		
 		String sampleResult = mapper.selectEurasia();
 		
-		System.out.println(sampleResult);
+		log.debug(sampleResult);
 		
 		session.close();
 		
@@ -43,7 +47,7 @@ public class MyBatisTest {
 
 		String sampleResult = (String)session.selectOne("com.threem.eurasia.sample.EurasiaMapper.selectEurasia");
 		
-		System.out.println(sampleResult);
+		log.debug(sampleResult);
 		
 		session.close();
 		
@@ -63,7 +67,36 @@ public class MyBatisTest {
 		
 		session.close();
 		
-		System.out.println(sampleResult);
+		log.debug(sampleResult);
+		
+	}
+	
+	//MyBatis XML 설정 값 자바로 직접 연결시 properties 직접 설정하기 !! 
+	@Test
+	public void testMybatis_sqlSession_직접연결사용해보기_properteis사용하기() throws Exception {
+		
+		String resource = "spring/mybatis-config.xml";
+		String propertiesFile = "properties/jdbc.properties";
+		
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+
+		//프로퍼티 파일 가져오는 부분
+		InputStream propertiesStream = Resources.getResourceAsStream(propertiesFile);
+		//프로퍼티를 가져오는 또다른 방법
+		//InputStream propertiesStream = this.getClass().getClassLoader().getResourceAsStream(propertiesFile);
+		
+		Properties properties = new Properties();
+		properties.load(propertiesStream);
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, properties);
+		
+		SqlSession session = sqlSessionFactory.openSession();
+
+		String sampleResult = (String)session.selectOne("com.threem.eurasia.sample.EurasiaMapper.selectEurasia");
+		
+		log.debug(sampleResult);
+		
+		session.close();
 		
 	}
 	
