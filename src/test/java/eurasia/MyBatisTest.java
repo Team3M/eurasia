@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import com.threem.eurasia.sample.Eurasia;
 import com.threem.eurasia.sample.EurasiaMapper;
 
 @Slf4j
@@ -100,5 +101,32 @@ public class MyBatisTest {
 		
 	}
 	
+	//Mapper설정의 lazyLoading  test !! 
+	@Test
+	public void testMybatis_sqlSession_직접연결사용해보기_lazyLoading설정테스트() throws Exception {
+		
+		String resource = "spring/mybatis-config.xml";
+		String propertiesFile = "properties/jdbc.properties";
+		
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+
+		//프로퍼티 파일 가져오는 부분
+		InputStream propertiesStream = Resources.getResourceAsStream(propertiesFile);
+		
+		Properties properties = new Properties();
+		properties.load(propertiesStream);
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, properties);
+		SqlSession session = sqlSessionFactory.openSession();
+
+		Eurasia eurasia = (Eurasia)session.selectOne("com.threem.eurasia.sample.EurasiaMapper.selectLazyLoadingTestA");
+		
+		System.out.println("lazy loading 시작 !!");
+		
+		eurasia.getEurasiaSub();
+		
+		session.close();
+		
+	}
 	
 }
